@@ -15,6 +15,11 @@ class SignUpForm extends Component {
         onDataChange(value, type)
     }
 
+    onSubmit() {
+        let {onSubmit} = this.props;
+        onSubmit();
+    }
+
     render() {
         return(
             <div className="SignUpForm">
@@ -38,7 +43,7 @@ class SignUpForm extends Component {
                     </svg>
                     <input type="password" placeholder={'Password'} onChange={(e) => this.onDataChange(e, 'password')} />
                 </div>
-                <button className="signup-button">Sign Up</button>
+                <button className="signup-button" onClick={() => this.onSubmit()}>Sign Up</button>
             </div>
         );
     }

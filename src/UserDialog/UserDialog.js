@@ -34,6 +34,11 @@ class UserDialog extends Component {
         })
     }
 
+    onSubmit() {
+        let {formData} = this.state;
+        console.log(formData)
+    }
+
     render() {
         let { selectedTab } = this.state;
         return(
@@ -45,9 +50,13 @@ class UserDialog extends Component {
                     </ul>
                     {
                         selectedTab === "signIn" ?
-                            <SignInForm onDataChange={this.changeDataForm.bind(this)}/>
+                            <SignInForm onDataChange={this.changeDataForm.bind(this)}
+                                        onSubmit={this.onSubmit.bind(this)}
+                            />
                             :
-                            <SignUpForm onDataChange={this.changeDataForm.bind(this)}/>
+                            <SignUpForm onDataChange={this.changeDataForm.bind(this)}
+                                        onSubmit={this.onSubmit.bind(this)}
+                            />
                     }
                 </div>
             </div>

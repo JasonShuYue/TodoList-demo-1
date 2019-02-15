@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import {getCurrentUser, signOut} from './leanCloud/leanCloud';
 import TodoInput from './TodoInput/TodoInput';
 import TodoItems from './TodoItems/TodoItems';
 import UserDialog from './UserDialog/UserDialog';
@@ -13,6 +14,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: getCurrentUser() || {},
       newTodo: '',
       todoList: [],
       selectedId: [],
@@ -74,7 +76,7 @@ class App extends Component {
   }
 
   render() {
-    let {newTodo, todoList, selectedId} = this.state;
+    let {newTodo, todoList, selectedId, user} = this.state;
     return (
       <div className="App">
         <h1 className="todos-title">todos</h1>
@@ -91,8 +93,10 @@ class App extends Component {
                        toggleSelected={this.toggleSelected.bind(this)}
             />
           }
+          {
+            user && <UserDialog />
+          }
 
-          <UserDialog />
         </div>
       </div>
     );
