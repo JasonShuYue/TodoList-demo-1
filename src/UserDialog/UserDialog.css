@@ -1,0 +1,82 @@
+@charset "UTF-8";
+.UserDialog-wrapper {
+  /*全屏覆盖*/
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  /*内容居中*/
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.UserDialog-wrapper .UserDialog {
+  min-width: 400px;
+  padding: 20px 30px 30px 30px;
+  background: white;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.5); }
+
+.UserDialog-wrapper .UserDialog .tab-list {
+  display: flex;
+  justify-content: center; }
+
+.UserDialog-wrapper .UserDialog .tab-list .tab-item {
+  padding: 10px;
+  margin: 0 10px;
+  font-size: 24px;
+  color: #969696;
+  position: relative;
+  cursor: pointer; }
+
+.UserDialog-wrapper .UserDialog .tab-list .tab-item.active, .UserDialog-wrapper .UserDialog .tab-list .tab-item:hover {
+  border-bottom: 2px solid #ea6f5a; }
+
+.UserDialog-wrapper .UserDialog .tab-list .tab-item.active {
+  color: #ea6f5a; }
+
+.UserDialog-wrapper .UserDialog .SignInForm, .UserDialog-wrapper .UserDialog .SignUpForm {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px; }
+
+.UserDialog-wrapper .UserDialog .SignInForm .input-wrapper, .UserDialog-wrapper .UserDialog .SignUpForm .input-wrapper {
+  position: relative; }
+
+.UserDialog-wrapper .UserDialog .SignInForm .input-wrapper .icon-password, .UserDialog-wrapper .UserDialog .SignInForm .input-wrapper .icon-user, .UserDialog-wrapper .UserDialog .SignInForm .input-wrapper .icon-email, .UserDialog-wrapper .UserDialog .SignUpForm .input-wrapper .icon-password, .UserDialog-wrapper .UserDialog .SignUpForm .input-wrapper .icon-user, .UserDialog-wrapper .UserDialog .SignUpForm .input-wrapper .icon-email {
+  position: absolute;
+  top: 14px;
+  left: 10px;
+  font-size: 18px;
+  color: #969696; }
+
+.UserDialog-wrapper .UserDialog .SignInForm .input-wrapper input, .UserDialog-wrapper .UserDialog .SignUpForm .input-wrapper input {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 0;
+  padding: 4px 12px 4px 35px;
+  border: 1px solid #c8c8c8;
+  border-radius: 0 0 4px 4px;
+  background-color: rgba(181, 181, 181, 0.1);
+  vertical-align: middle; }
+
+.UserDialog-wrapper .UserDialog .SignInForm .input-wrapper input:focus, .UserDialog-wrapper .UserDialog .SignUpForm .input-wrapper input:focus {
+  outline: none; }
+
+.UserDialog-wrapper .UserDialog .SignInForm .signup-button, .UserDialog-wrapper .UserDialog .SignInForm .signin-button, .UserDialog-wrapper .UserDialog .SignUpForm .signup-button, .UserDialog-wrapper .UserDialog .SignUpForm .signin-button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 9px 18px;
+  font-size: 18px;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  outline: none;
+  cursor: pointer; }
+
+.UserDialog-wrapper .UserDialog .SignInForm .signup-button, .UserDialog-wrapper .UserDialog .SignUpForm .signup-button {
+  background: #42c02e; }
+
+.UserDialog-wrapper .UserDialog .SignInForm .signin-button, .UserDialog-wrapper .UserDialog .SignUpForm .signin-button {
+  background: #3194d0; }
