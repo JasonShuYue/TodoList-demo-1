@@ -39,46 +39,53 @@ $colorPrimary: #ea6f5a;
       display: flex;
       flex-direction: column;
       padding-top: 20px;
-      .input-wrapper {
-        position: relative;
-        .icon-password, .icon-user, .icon-email {
-          position: absolute;
-          top: 14px;
-          left: 10px;
-          font-size: 18px;
-          color: #969696;
-        }
-        input {
-          width: 100%;
-          height: 50px;
-          margin-bottom: 0;
-          padding: 4px 12px 4px 35px;
-          border: 1px solid #c8c8c8;
-          border-radius: 0 0 4px 4px;
-          background-color: hsla(0,0%,71%,.1);
-          vertical-align: middle;
-          &:focus {
-            outline: none;
+      .signUp-form, .signIn-form {
+        .input-wrapper {
+          position: relative;
+          .icon-password, .icon-user, .icon-email {
+            position: absolute;
+            top: 14px;
+            left: 10px;
+            font-size: 18px;
+            color: #969696;
+          }
+          input {
+            width: 100%;
+            height: 50px;
+            margin-bottom: 0;
+            padding: 4px 12px 4px 35px;
+            border: 1px solid #c8c8c8;
+            border-radius: 0 0 4px 4px;
+            background-color: hsla(0,0%,71%,.1);
+            vertical-align: middle;
+            &:focus {
+              outline: none;
+            }
           }
         }
+        .tips {
+          color: red;
+          padding-left: 10px;
+        }
+        .signUp-button, .signIn-button {
+          margin-top: 20px;
+          width: 100%;
+          padding: 9px 18px;
+          font-size: 18px;
+          border: none;
+          border-radius: 25px;
+          color: #fff;
+          outline: none;
+          cursor: pointer;
+        }
+        .signUp-button {
+          background: #42c02e;
+        }
+        .signIn-button {
+          background: #3194d0;
+        }
       }
-      .signup-button, .signin-button {
-        margin-top: 20px;
-        width: 100%;
-        padding: 9px 18px;
-        font-size: 18px;
-        border: none;
-        border-radius: 25px;
-        color: #fff;
-        outline: none;
-        cursor: pointer;
-      }
-      .signup-button {
-        background: #42c02e;
-      }
-      .signin-button {
-        background: #3194d0;
-      }
+
     }
   }
 }

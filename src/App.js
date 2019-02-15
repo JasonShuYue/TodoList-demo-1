@@ -75,17 +75,36 @@ class App extends Component {
     });
   }
 
+  changeUser(user) {
+    this.setState({
+      ...this.state,
+      user: user
+    });
+  }
+
+  // 登出操作
+  signOut() {
+    signOut();
+    this.setState({
+      ...this.state,
+      user: {}
+    });
+  }
+
+
   render() {
     let {newTodo, todoList, selectedId, user} = this.state;
+    console.log('useruser', user)
     return (
       <div className="App">
-        <h1 className="todos-title">todos</h1>
+        <h1 className="todos-title">{user.id ? user.username : 'My'}todos</h1>
         <div className="main-content">
           <TodoInput reflashNewToDo={this.reflashNewToDo.bind(this)}
                      addTodo={this.addTodo.bind(this)}
                      delTodo={this.delTodo.bind(this)}
                      newTodo={newTodo}
                      showSelectAll={todoList.length > 0 ? true : false}
+                     signOut={this.signOut.bind(this)}
           />
           {
             todoList.length > 0 &&
@@ -94,7 +113,7 @@ class App extends Component {
             />
           }
           {
-            user && <UserDialog />
+            !user.id && <UserDialog changeUser={this.changeUser.bind(this)} />
           }
 
         </div>

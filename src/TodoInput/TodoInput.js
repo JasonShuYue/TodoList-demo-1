@@ -35,8 +35,13 @@ class TodoInput extends Component {
         }
     }
 
+    // 登出操作
+    signOut() {
+        this.props.signOut.call(null);
+    }
+
     render() {
-        let { newTodo, showSelectAll } = this.props;
+        let { newTodo, showSelectAll, signOut} = this.props;
 
         return(
             <div className="TodoInput">
@@ -50,6 +55,7 @@ class TodoInput extends Component {
                        onChange={this.newTodoOnChange.bind(this)}
                        onKeyPress={this.onKeyPress.bind(this)}
                 />
+                <button onClick={this.signOut.bind(this)}>Sign out</button>
             </div>
         );
     }

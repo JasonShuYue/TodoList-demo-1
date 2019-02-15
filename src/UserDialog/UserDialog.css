@@ -41,17 +41,17 @@
   flex-direction: column;
   padding-top: 20px; }
 
-.UserDialog-wrapper .UserDialog .SignInForm .input-wrapper, .UserDialog-wrapper .UserDialog .SignUpForm .input-wrapper {
+.UserDialog-wrapper .UserDialog .SignInForm .signUp-form .input-wrapper, .UserDialog-wrapper .UserDialog .SignInForm .signIn-form .input-wrapper, .UserDialog-wrapper .UserDialog .SignUpForm .signUp-form .input-wrapper, .UserDialog-wrapper .UserDialog .SignUpForm .signIn-form .input-wrapper {
   position: relative; }
 
-.UserDialog-wrapper .UserDialog .SignInForm .input-wrapper .icon-password, .UserDialog-wrapper .UserDialog .SignInForm .input-wrapper .icon-user, .UserDialog-wrapper .UserDialog .SignInForm .input-wrapper .icon-email, .UserDialog-wrapper .UserDialog .SignUpForm .input-wrapper .icon-password, .UserDialog-wrapper .UserDialog .SignUpForm .input-wrapper .icon-user, .UserDialog-wrapper .UserDialog .SignUpForm .input-wrapper .icon-email {
+.UserDialog-wrapper .UserDialog .SignInForm .signUp-form .input-wrapper .icon-password, .UserDialog-wrapper .UserDialog .SignInForm .signUp-form .input-wrapper .icon-user, .UserDialog-wrapper .UserDialog .SignInForm .signUp-form .input-wrapper .icon-email, .UserDialog-wrapper .UserDialog .SignInForm .signIn-form .input-wrapper .icon-password, .UserDialog-wrapper .UserDialog .SignInForm .signIn-form .input-wrapper .icon-user, .UserDialog-wrapper .UserDialog .SignInForm .signIn-form .input-wrapper .icon-email, .UserDialog-wrapper .UserDialog .SignUpForm .signUp-form .input-wrapper .icon-password, .UserDialog-wrapper .UserDialog .SignUpForm .signUp-form .input-wrapper .icon-user, .UserDialog-wrapper .UserDialog .SignUpForm .signUp-form .input-wrapper .icon-email, .UserDialog-wrapper .UserDialog .SignUpForm .signIn-form .input-wrapper .icon-password, .UserDialog-wrapper .UserDialog .SignUpForm .signIn-form .input-wrapper .icon-user, .UserDialog-wrapper .UserDialog .SignUpForm .signIn-form .input-wrapper .icon-email {
   position: absolute;
   top: 14px;
   left: 10px;
   font-size: 18px;
   color: #969696; }
 
-.UserDialog-wrapper .UserDialog .SignInForm .input-wrapper input, .UserDialog-wrapper .UserDialog .SignUpForm .input-wrapper input {
+.UserDialog-wrapper .UserDialog .SignInForm .signUp-form .input-wrapper input, .UserDialog-wrapper .UserDialog .SignInForm .signIn-form .input-wrapper input, .UserDialog-wrapper .UserDialog .SignUpForm .signUp-form .input-wrapper input, .UserDialog-wrapper .UserDialog .SignUpForm .signIn-form .input-wrapper input {
   width: 100%;
   height: 50px;
   margin-bottom: 0;
@@ -61,10 +61,14 @@
   background-color: rgba(181, 181, 181, 0.1);
   vertical-align: middle; }
 
-.UserDialog-wrapper .UserDialog .SignInForm .input-wrapper input:focus, .UserDialog-wrapper .UserDialog .SignUpForm .input-wrapper input:focus {
+.UserDialog-wrapper .UserDialog .SignInForm .signUp-form .input-wrapper input:focus, .UserDialog-wrapper .UserDialog .SignInForm .signIn-form .input-wrapper input:focus, .UserDialog-wrapper .UserDialog .SignUpForm .signUp-form .input-wrapper input:focus, .UserDialog-wrapper .UserDialog .SignUpForm .signIn-form .input-wrapper input:focus {
   outline: none; }
 
-.UserDialog-wrapper .UserDialog .SignInForm .signup-button, .UserDialog-wrapper .UserDialog .SignInForm .signin-button, .UserDialog-wrapper .UserDialog .SignUpForm .signup-button, .UserDialog-wrapper .UserDialog .SignUpForm .signin-button {
+.UserDialog-wrapper .UserDialog .SignInForm .signUp-form .tips, .UserDialog-wrapper .UserDialog .SignInForm .signIn-form .tips, .UserDialog-wrapper .UserDialog .SignUpForm .signUp-form .tips, .UserDialog-wrapper .UserDialog .SignUpForm .signIn-form .tips {
+  color: red;
+  padding-left: 10px; }
+
+.UserDialog-wrapper .UserDialog .SignInForm .signUp-form .signUp-button, .UserDialog-wrapper .UserDialog .SignInForm .signUp-form .signIn-button, .UserDialog-wrapper .UserDialog .SignInForm .signIn-form .signUp-button, .UserDialog-wrapper .UserDialog .SignInForm .signIn-form .signIn-button, .UserDialog-wrapper .UserDialog .SignUpForm .signUp-form .signUp-button, .UserDialog-wrapper .UserDialog .SignUpForm .signUp-form .signIn-button, .UserDialog-wrapper .UserDialog .SignUpForm .signIn-form .signUp-button, .UserDialog-wrapper .UserDialog .SignUpForm .signIn-form .signIn-button {
   margin-top: 20px;
   width: 100%;
   padding: 9px 18px;
@@ -75,8 +79,8 @@
   outline: none;
   cursor: pointer; }
 
-.UserDialog-wrapper .UserDialog .SignInForm .signup-button, .UserDialog-wrapper .UserDialog .SignUpForm .signup-button {
+.UserDialog-wrapper .UserDialog .SignInForm .signUp-form .signUp-button, .UserDialog-wrapper .UserDialog .SignInForm .signIn-form .signUp-button, .UserDialog-wrapper .UserDialog .SignUpForm .signUp-form .signUp-button, .UserDialog-wrapper .UserDialog .SignUpForm .signIn-form .signUp-button {
   background: #42c02e; }
 
-.UserDialog-wrapper .UserDialog .SignInForm .signin-button, .UserDialog-wrapper .UserDialog .SignUpForm .signin-button {
+.UserDialog-wrapper .UserDialog .SignInForm .signUp-form .signIn-button, .UserDialog-wrapper .UserDialog .SignInForm .signIn-form .signIn-button, .UserDialog-wrapper .UserDialog .SignUpForm .signUp-form .signIn-button, .UserDialog-wrapper .UserDialog .SignUpForm .signIn-form .signIn-button {
   background: #3194d0; }

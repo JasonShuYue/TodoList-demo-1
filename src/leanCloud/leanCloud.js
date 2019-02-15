@@ -13,6 +13,10 @@ AV.init({
 export default AV;
 
 export function signUp(email, userName, passWord, successFn, errorFn) {
+    // console.log('email', email)
+    // console.log('userName', userName)
+    // console.log('passWord', passWord)
+
     // 新建AVUser实例
     let user = new AV.User();
 
@@ -61,6 +65,7 @@ export function signOut() {
 export function signIn(username, password, successFn, errorFn) {
     AV.User.logIn(username, password).then(function (loggedInUser) {
         let user = getUserFromAVUser(loggedInUser);
+        console.log(user)
         successFn.call(null, user);
     }, function (error) {
         errorFn.call(null, error)
