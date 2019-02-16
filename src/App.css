@@ -13,6 +13,27 @@
   position: relative;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1); }
 
+.App .welcome-wrapper {
+  position: absolute;
+  right: 15px; }
+
+.App .welcome-wrapper .welcome-tips {
+  color: rgba(175, 47, 47, 0.5);
+  font-size: 18px;
+  display: inline-block; }
+
+.App .welcome-wrapper .welcome-tips .user-name {
+  padding-left: 10px; }
+
+.App .welcome-wrapper .signOut-btn {
+  color: rgba(175, 47, 47, 0.5);
+  padding-left: 10px;
+  cursor: pointer;
+  background: transparent; }
+
+.App .welcome-wrapper .signOut-btn:hover {
+  text-decoration: underline; }
+
 .App .todos-title {
   position: absolute;
   top: -155px;

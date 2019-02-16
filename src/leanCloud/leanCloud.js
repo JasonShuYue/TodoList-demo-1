@@ -13,10 +13,6 @@ AV.init({
 export default AV;
 
 export function signUp(email, userName, passWord, successFn, errorFn) {
-    // console.log('email', email)
-    // console.log('userName', userName)
-    // console.log('passWord', passWord)
-
     // 新建AVUser实例
     let user = new AV.User();
 
@@ -69,5 +65,55 @@ export function signIn(username, password, successFn, errorFn) {
         successFn.call(null, user);
     }, function (error) {
         errorFn.call(null, error)
+    });
+}
+
+// 新增Todo
+export function addTodo(obj, successFn, errorFn) {
+    let Todo = AV.Object.extend('Todo');
+    let todo = new Todo();
+
+    for(let key in obj) {
+        todo.set(key, obj[key]);
+    }
+    todo.save().then((todo)=> {
+        todo = getUserFromAVUser(todo);
+        successFn(todo);
+    }, (error) => {
+        errorFn(error);
+    });
+}
+
+// 批量删除Todo
+export function batchDelTodo(idList, successFn, errorFn) {
+    // 批量删除
+    AV.Object.destroyAll(idList).then(function () {
+        // 成功
+    }, function (error) {
+        // 异常处理
+    });
+}
+
+// 获取对应userId的TodoList
+export function fetchAllTodos(userId, successFn, errorFn) {
+    var query = new AV.Query('Todo');
+
+    query.find().then(function (todos) {
+        // 先过滤出对应userId的TodoList
+        let filterList = [];
+        for(let i = 0; i < todos.length; i++) {
+            let current = getUserFromAVUser(todos[i]);
+            if(current.userId === userId) {
+                filterList.push(current);
+            }
+        }
+        return AV.Object.saveAll(filterList);
+    }).then(function(todos) {
+        console.log(todos)
+        // 更新成功
+        successFn(todos)
+    }, function (error) {
+        // 异常处理
+        errorFn(error);
     });
 }

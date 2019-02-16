@@ -78,6 +78,7 @@ class TodoItems extends Component {
                         <li className={`filters-active ${selectedType === 'Active' ? 'active' : ''}`} onClick={() => this.changeSelectedType('Active')}>Active</li>
                         <li className={`filters-completed ${selectedType === 'Completed' ? 'active' : ''}`} onClick={() => this.changeSelectedType('Completed')}>Completed</li>
                     </ul>
+                    <span className="clear-completed">Clear completed</span>
                 </footer>
             </div>
         );

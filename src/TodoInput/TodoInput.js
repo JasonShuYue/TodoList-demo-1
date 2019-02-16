@@ -57,7 +57,6 @@ class TodoInput extends Component {
                        onChange={this.newTodoOnChange.bind(this)}
                        onKeyPress={this.onKeyPress.bind(this)}
                 />
-                <button onClick={this.signOut.bind(this)}>Sign out</button>
             </div>
         );
     }

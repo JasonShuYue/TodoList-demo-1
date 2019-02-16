@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {getCurrentUser, signOut} from './leanCloud/leanCloud';
+import {getCurrentUser, signOut, addTodo, fetchAllTodos} from './leanCloud/leanCloud';
 import TodoInput from './TodoInput/TodoInput';
 import TodoItems from './TodoItems/TodoItems';
 import UserDialog from './UserDialog/UserDialog';
@@ -31,19 +31,27 @@ class App extends Component {
 
   // 新增Todo
   addTodo() {
-    let {todoList, newTodo} = this.state;
-    // 不为空
-    if(newTodo !== '') {
-      let dataModel = {
-        id: idMaker(),
-        content: newTodo,
-        status: '', // Complted or not
-      }
-      todoList.push(dataModel);
+    let {todoList, newTodo, user} = this.state;
+    let successFn = (todo) => {
+      console.log('todotodo',todo)
+      todoList.push(todo);
       this.setState({
         ...this.state,
         todoList: todoList
       });
+    };
+    let errorFn =  (error) => {
+      alert(error);
+    };
+
+    // 不为空
+    if(newTodo !== '') {
+      let dataModel = {
+        userId: user.id,
+        content: newTodo,
+        status: '', // Complted or not
+      };
+      addTodo(dataModel, successFn, errorFn);
     }
   }
 
@@ -59,7 +67,7 @@ class App extends Component {
         }
       }
     } else {
-      let index = selectedId.indexOf(id);
+      let index = selectedId.indexOf(item.id);
       selectedId.splice(index, 1);
       for(let i = 0; i < todoList.length; i++) {
         if(todoList[i].id === item.id) {
@@ -75,14 +83,13 @@ class App extends Component {
   }
 
   // 删除Todo
-  delTodo(id) {
-    let { todoList } = this.state;
-    todoList = todoList.filter(item => item.id !== id);
-    this.setState({
-      ...this.state,
-      todoList: todoList
-    });
-  }
+  // delTodo(idList) {
+  //   let { selectedId } = this.state;
+  //   this.setState({
+  //     ...this.state,
+  //     todoList: todoList
+  //   });
+  // }
 
   changeUser(user) {
     this.setState({
@@ -95,8 +102,10 @@ class App extends Component {
   signOut() {
     signOut();
     this.setState({
-      ...this.state,
-      user: {}
+      user: {},
+      newTodo: '',
+      todoList: [],
+      selectedId: []
     });
   }
 
@@ -129,16 +138,39 @@ class App extends Component {
     }
   }
 
+  fetchAllTodos() {
+    let userId = this.state.user.id;
+    let successFn = (todoList) => {
+      this.setState({
+        ...this.state,
+        todoList
+      });
+    };
+    fetchAllTodos(userId, successFn, null);
+  }
+
+  componentDidMount() {
+    this.fetchAllTodos();
+  }
+
 
   render() {
     let {newTodo, todoList, selectedId, user} = this.state;
+    // console.log('todoList', todoList)
     return (
       <div className="App">
+        {
+          user.id &&
+          <div className="welcome-wrapper">
+            <p className="welcome-tips">Welcome!<span className="user-name">{user.username}</span></p>
+            <span className="signOut-btn" onClick={this.signOut.bind(this)}>Sign out</span>
+          </div>
+        }
         <div className="main-content">
           <h1 className="todos-title">todos</h1>
+
           <TodoInput reflashNewToDo={this.reflashNewToDo.bind(this)}
                      addTodo={this.addTodo.bind(this)}
-                     delTodo={this.delTodo.bind(this)}
                      newTodo={newTodo}
                      showSelectAll={todoList.length > 0 ? true : false}
                      signOut={this.signOut.bind(this)}
@@ -151,7 +183,9 @@ class App extends Component {
             />
           }
           {
-            !user.id && <UserDialog changeUser={this.changeUser.bind(this)} />
+            !user.id && <UserDialog changeUser={this.changeUser.bind(this)}
+                                    fetchAllTodos={this.fetchAllTodos.bind(this)}
+            />
           }
 
         </div>
@@ -162,9 +196,3 @@ class App extends Component {
 
 export default App;
 
-let id = 0;
-
-function idMaker() {
-  id += 1;
-  return id;
-}

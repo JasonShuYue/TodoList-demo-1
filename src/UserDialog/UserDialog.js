@@ -40,10 +40,11 @@ class UserDialog extends Component {
 
     // 注册/登录操作
     signUpOrIn() {
-        let { changeUser } = this.props;
+        let { changeUser, fetchAllTodos} = this.props;
         let { formData: {email, username, password}, selectedTab} = this.state;
         let success = (user)=>{
             changeUser.call(null, user);
+            fetchAllTodos();
         }
         let error = (error)=>{
             let temp = '';
