@@ -41,11 +41,13 @@ class TodoInput extends Component {
     }
 
     render() {
-        let { newTodo, showSelectAll, signOut} = this.props;
+        let { newTodo, showSelectAll, selectAll} = this.props;
 
         return(
             <div className="TodoInput">
-                <div className={`selectAll-wrapper ${showSelectAll ? '' : 'hidden'}`}>
+                <div className={`selectAll-wrapper ${showSelectAll ? '' : 'hidden'}`}
+                     onClick={() => selectAll()}
+                >
                     <svg className="icon icon-arrow" aria-hidden="true">
                         <use xlinkHref="#icon-arrow"></use>
                     </svg>

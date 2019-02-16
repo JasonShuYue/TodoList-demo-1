@@ -39,7 +39,7 @@ class App extends Component {
         content: newTodo,
         status: '', // Complted or not
       }
-      todoList.unshift(dataModel);
+      todoList.push(dataModel);
       this.setState({
         ...this.state,
         todoList: todoList
@@ -49,15 +49,24 @@ class App extends Component {
 
   // 新增/删除selectedId，同时修改item的status
   toggleSelected(item) {
-    let {selectedId} = this.state;
-
-    console.log(item)
-
+    let {selectedId, todoList} = this.state;
     if(selectedId.indexOf(item.id) < 0) {
       selectedId.push(item.id);
+      for(let i = 0; i < todoList.length; i++) {
+        if(todoList[i].id === item.id) {
+          todoList[i].status = 'completed';
+          break;
+        }
+      }
     } else {
       let index = selectedId.indexOf(id);
       selectedId.splice(index, 1);
+      for(let i = 0; i < todoList.length; i++) {
+        if(todoList[i].id === item.id) {
+          todoList[i].status = '';
+          break;
+        }
+      }
     }
     this.setState({
       ...this.state,
@@ -91,20 +100,49 @@ class App extends Component {
     });
   }
 
+  // 选择/取消选择所有item
+  selectAll() {
+    let {todoList, selectedId} = this.state;
+    if(selectedId.length !== todoList.length) {
+      todoList.map((item) => {
+        if(selectedId.indexOf(item.id) < 0) {
+          item.status = 'completed';
+          selectedId.push(item.id);
+        }
+      });
+      this.setState({
+        ...this.state,
+        todoList: todoList,
+        selectedId: selectedId
+      });
+    } else {
+      selectedId = [];
+      for(let i = 0; i < todoList.length; i++) {
+        if(todoList[i].status === "completed") {
+          todoList[i].status = '';
+        }
+      }
+      this.setState({
+        ...this.state,
+        selectedId: selectedId
+      });
+    }
+  }
+
 
   render() {
     let {newTodo, todoList, selectedId, user} = this.state;
-    console.log('useruser', user)
     return (
       <div className="App">
-        <h1 className="todos-title">{user.id ? user.username : 'My'}todos</h1>
         <div className="main-content">
+          <h1 className="todos-title">todos</h1>
           <TodoInput reflashNewToDo={this.reflashNewToDo.bind(this)}
                      addTodo={this.addTodo.bind(this)}
                      delTodo={this.delTodo.bind(this)}
                      newTodo={newTodo}
                      showSelectAll={todoList.length > 0 ? true : false}
                      signOut={this.signOut.bind(this)}
+                     selectAll={this.selectAll.bind(this)}
           />
           {
             todoList.length > 0 &&
