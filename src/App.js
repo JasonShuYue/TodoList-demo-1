@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {getCurrentUser, signOut, addTodo, fetchAllTodos} from './leanCloud/leanCloud';
+import {getCurrentUser, signOut, addTodo, batchUpdateTodos, fetchAllTodos, delTodo, batchDelTodo} from './leanCloud/leanCloud';
 import TodoInput from './TodoInput/TodoInput';
 import TodoItems from './TodoItems/TodoItems';
 import UserDialog from './UserDialog/UserDialog';
@@ -33,7 +33,6 @@ class App extends Component {
   addTodo() {
     let {todoList, newTodo, user} = this.state;
     let successFn = (todo) => {
-      console.log('todotodo',todo)
       todoList.push(todo);
       this.setState({
         ...this.state,
@@ -49,47 +48,78 @@ class App extends Component {
       let dataModel = {
         userId: user.id,
         content: newTodo,
-        status: '', // Complted or not
+        status: 'active', // Complted or not
       };
       addTodo(dataModel, successFn, errorFn);
     }
   }
 
-  // 新增/删除selectedId，同时修改item的status
-  toggleSelected(item) {
-    let {selectedId, todoList} = this.state;
-    if(selectedId.indexOf(item.id) < 0) {
-      selectedId.push(item.id);
-      for(let i = 0; i < todoList.length; i++) {
-        if(todoList[i].id === item.id) {
-          todoList[i].status = 'completed';
-          break;
-        }
-      }
-    } else {
-      let index = selectedId.indexOf(item.id);
-      selectedId.splice(index, 1);
-      for(let i = 0; i < todoList.length; i++) {
-        if(todoList[i].id === item.id) {
-          todoList[i].status = '';
-          break;
-        }
-      }
+  // 直接删除单个Todo
+  delTodo(id) {
+    let successFn = (todo) => {
+      this.fetchAllTodos();
     }
-    this.setState({
-      ...this.state,
-      selectedId: selectedId
-    });
+    delTodo(id, successFn, null);
   }
 
-  // 删除Todo
-  // delTodo(idList) {
-  //   let { selectedId } = this.state;
-  //   this.setState({
-  //     ...this.state,
-  //     todoList: todoList
-  //   });
-  // }
+  // 批量删除Todo
+  batchDelTodo() {
+    let { selectedId } = this.state;
+    let succesFn = () => {
+      this.setState({
+        ...this.state,
+        selectedId: []
+      });
+      this.fetchAllTodos();
+    }
+    batchDelTodo(selectedId, succesFn, null)
+  }
+
+  batchUpdateTodos(idList, type, successFn) {
+    batchUpdateTodos(idList, type, successFn, null);
+  }
+
+  // 选择/取消选择所有item
+  selectAll() {
+    let {todoList, selectedId} = this.state;
+    let idList = todoList.map(v => v.id);
+    if(selectedId.length !== todoList.length) {
+      let successFn = () => {
+        // 获取最新数据
+        this.fetchAllTodos();
+      };
+      this.batchUpdateTodos(idList, 'completed', successFn)
+
+    } else {
+      let successFn = () => {
+        // 获取最新数据
+        this.fetchAllTodos();
+      };
+      this.batchUpdateTodos(idList, 'active', successFn)
+
+    }
+  }
+
+  // 新增/删除selectedId，同时修改item的status
+  toggleSelected(item) {
+    let {selectedId} = this.state;
+    if(selectedId.indexOf(item.id) < 0) {
+      let successFn = () => {
+        // 获取最新数据
+        this.fetchAllTodos();
+      }
+      let idList = [item.id];
+      this.batchUpdateTodos(idList, 'completed', successFn)
+    } else {
+      let successFn = () => {
+        // 获取最新数据
+        this.fetchAllTodos();
+      };
+      let idList = [item.id]
+      this.batchUpdateTodos(idList, 'active', successFn)
+    }
+
+  }
 
   changeUser(user) {
     this.setState({
@@ -109,42 +139,22 @@ class App extends Component {
     });
   }
 
-  // 选择/取消选择所有item
-  selectAll() {
-    let {todoList, selectedId} = this.state;
-    if(selectedId.length !== todoList.length) {
-      todoList.map((item) => {
-        if(selectedId.indexOf(item.id) < 0) {
-          item.status = 'completed';
-          selectedId.push(item.id);
+  // 获取最新数据
+  fetchAllTodos(callback) {
+    let userId = this.state.user.id;
+    let successFn = (todoList) => {
+      let selectedId = [];
+      for(let i = 0; i <  todoList.length; i++) {
+        if(todoList[i].status === 'completed') {
+          selectedId.push(todoList[i].id)
         }
-      });
+      }
       this.setState({
         ...this.state,
         todoList: todoList,
         selectedId: selectedId
       });
-    } else {
-      selectedId = [];
-      for(let i = 0; i < todoList.length; i++) {
-        if(todoList[i].status === "completed") {
-          todoList[i].status = '';
-        }
-      }
-      this.setState({
-        ...this.state,
-        selectedId: selectedId
-      });
-    }
-  }
-
-  fetchAllTodos() {
-    let userId = this.state.user.id;
-    let successFn = (todoList) => {
-      this.setState({
-        ...this.state,
-        todoList
-      });
+      callback && callback();
     };
     fetchAllTodos(userId, successFn, null);
   }
@@ -156,7 +166,6 @@ class App extends Component {
 
   render() {
     let {newTodo, todoList, selectedId, user} = this.state;
-    // console.log('todoList', todoList)
     return (
       <div className="App">
         {
@@ -180,6 +189,8 @@ class App extends Component {
             todoList.length > 0 &&
             <TodoItems Todolists={todoList} selectedId={selectedId}
                        toggleSelected={this.toggleSelected.bind(this)}
+                       delTodo={this.delTodo.bind(this)}
+                       batchDelTodo={this.batchDelTodo.bind(this)}
             />
           }
           {

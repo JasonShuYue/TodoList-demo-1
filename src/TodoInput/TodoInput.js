@@ -35,11 +35,6 @@ class TodoInput extends Component {
         }
     }
 
-    // 登出操作
-    signOut() {
-        this.props.signOut.call(null);
-    }
-
     render() {
         let { newTodo, showSelectAll, selectAll} = this.props;
 

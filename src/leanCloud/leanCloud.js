@@ -61,7 +61,6 @@ export function signOut() {
 export function signIn(username, password, successFn, errorFn) {
     AV.User.logIn(username, password).then(function (loggedInUser) {
         let user = getUserFromAVUser(loggedInUser);
-        console.log(user)
         successFn.call(null, user);
     }, function (error) {
         errorFn.call(null, error)
@@ -84,20 +83,55 @@ export function addTodo(obj, successFn, errorFn) {
     });
 }
 
+export function delTodo(id, successFn, errorFn) {
+    var todo = AV.Object.createWithoutData('Todo', id);
+    todo.destroy().then(function (success) {
+        // 删除成功
+        success = getUserFromAVUser(success);
+        successFn(success);
+    }, function (error) {
+        // 删除失败
+        errorFn(error)
+    });
+}
+
 // 批量删除Todo
 export function batchDelTodo(idList, successFn, errorFn) {
+    let objects = [];
+    idList.map( v => {
+        objects.push(AV.Object.createWithoutData('Todo', v));
+    });
     // 批量删除
-    AV.Object.destroyAll(idList).then(function () {
+    AV.Object.destroyAll(objects).then(function () {
         // 成功
+        successFn();
     }, function (error) {
         // 异常处理
+        errorFn(error);
     });
+}
+
+export function batchUpdateTodos(idList, type, successFn, errorFn) {
+    let objects = [];
+    idList.map( v => {
+        let todo = AV.Object.createWithoutData('Todo', v);
+        todo.set('status', type)
+        objects.push(todo);
+    });
+
+    // 批量创建（更新）
+    AV.Object.saveAll(objects).then(function (objects) {
+        successFn();
+    }, function (error) {
+        // 异常处理
+        errorFn(error)
+    });
+
 }
 
 // 获取对应userId的TodoList
 export function fetchAllTodos(userId, successFn, errorFn) {
     var query = new AV.Query('Todo');
-
     query.find().then(function (todos) {
         // 先过滤出对应userId的TodoList
         let filterList = [];
@@ -109,7 +143,6 @@ export function fetchAllTodos(userId, successFn, errorFn) {
         }
         return AV.Object.saveAll(filterList);
     }).then(function(todos) {
-        console.log(todos)
         // 更新成功
         successFn(todos)
     }, function (error) {

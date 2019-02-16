@@ -1,7 +1,8 @@
 .TodoItems .todo-list .todo-item {
   display: flex;
   overflow: hidden;
-  position: relative; }
+  position: relative;
+  border-bottom: 1px solid #ededed; }
 
 .TodoItems .todo-list .todo-item .check-wrapper {
   display: flex;
@@ -9,6 +10,8 @@
   top: 0;
   bottom: 0;
   left: 8px;
+  z-index: 1;
+  cursor: pointer;
   margin: auto 0;
   justify-content: center;
   align-items: center; }
@@ -22,7 +25,20 @@
   font-weight: 100;
   font-size: 24px;
   padding: 10px 15px 10px 60px;
-  word-break: break-all; }
+  word-break: break-all;
+  position: relative; }
+
+.TodoItems .todo-list .todo-item .item-content:hover .icon-close {
+  display: inline-block; }
+
+.TodoItems .todo-list .todo-item .item-content .icon-close {
+  position: absolute;
+  right: 20px;
+  display: none;
+  cursor: pointer; }
+
+.TodoItems .todo-list .todo-item .item-content .icon-close:hover {
+  color: rgba(175, 47, 47, 0.5); }
 
 .TodoItems .todo-list .todo-item.completed {
   color: #d9d9d9;
@@ -36,7 +52,6 @@
   color: #777;
   min-height: 40px;
   text-align: center;
-  border-top: 1px solid #e6e6e6;
   position: relative; }
 
 .TodoItems .TodoItems-footer::before {
@@ -58,7 +73,8 @@
   left: 0;
   right: 0;
   top: 0;
-  bottom: 0; }
+  bottom: 0;
+  user-select: none; }
 
 .TodoItems .TodoItems-footer .filters .filters-all, .TodoItems .TodoItems-footer .filters .filters-active, .TodoItems .TodoItems-footer .filters .filters-completed {
   color: inherit;
