@@ -6,6 +6,7 @@
     "leancloud-storage": "^3.11.1",
     "node-sass": "^4.11.0",
     "normalize.css": "^8.0.1",
+    "nrm": "^1.1.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-scripts": "2.1.5"
@@ -19,7 +20,7 @@
     "start-js": "node scripts/start.js",
     "run-double": "npm-run-all -p watch-css start"
   },
-  "homepage" : "https://jasonshuyue.github.io/TodoList-demo-1/build",
+  "homepage": "https://jasonshuyue.github.io/TodoList-demo-1/build",
   "eslintConfig": {
     "extends": "react-app"
   },

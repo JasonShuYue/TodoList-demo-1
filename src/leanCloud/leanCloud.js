@@ -126,7 +126,16 @@ export function batchUpdateTodos(idList, type, successFn, errorFn) {
         // 异常处理
         errorFn(error)
     });
+}
 
+export function updateTodoItem(obj, successFn, errorFn) {
+    let todo = AV.Object.createWithoutData('Todo', obj.id);
+    todo.set('content', obj.content);
+    todo.save().then((success)=> {
+        successFn(success);
+    }, (error) => {
+        errorFn(error)
+    });
 }
 
 // 获取对应userId的TodoList

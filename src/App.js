@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {getCurrentUser, signOut, addTodo, batchUpdateTodos, fetchAllTodos, delTodo, batchDelTodo} from './leanCloud/leanCloud';
+import {getCurrentUser, signOut, addTodo, batchUpdateTodos, fetchAllTodos, delTodo, batchDelTodo, updateTodoItem} from './leanCloud/leanCloud';
 import TodoInput from './TodoInput/TodoInput';
 import TodoItems from './TodoItems/TodoItems';
 import UserDialog from './UserDialog/UserDialog';
@@ -43,6 +43,9 @@ class App extends Component {
       alert(error);
     };
 
+    // 输入内容两边去空
+    newTodo = newTodo.trim();
+
     // 不为空
     if(newTodo !== '') {
       let dataModel = {
@@ -75,6 +78,15 @@ class App extends Component {
     batchDelTodo(selectedId, succesFn, null)
   }
 
+  // 更新item内容
+  updateTodoItem(obj) {
+    let successFn = () => {
+      this.fetchAllTodos();
+    };
+    updateTodoItem(obj, successFn, null);
+  }
+
+  // 批量更新Todos
   batchUpdateTodos(idList, type, successFn) {
     batchUpdateTodos(idList, type, successFn, null);
   }
@@ -191,6 +203,7 @@ class App extends Component {
                        toggleSelected={this.toggleSelected.bind(this)}
                        delTodo={this.delTodo.bind(this)}
                        batchDelTodo={this.batchDelTodo.bind(this)}
+                       updateTodoItem={this.updateTodoItem.bind(this)}
             />
           }
           {
